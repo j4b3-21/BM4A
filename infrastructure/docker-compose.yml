@@ -1,0 +1,5 @@
+include:
+  - ./postgres/docker-compose.yml
+  - ./keycloak/docker-compose.yml
+  - ./openfga/docker-compose.yml
+  - ./redis/docker-compose.yml

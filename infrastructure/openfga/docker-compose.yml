@@ -1,0 +1,43 @@
+services:
+  openfga-migrate:
+    image: openfga/openfga:latest
+    container_name: bm4a-openfga-migrate
+
+    command: migrate
+
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://${OPENFGA_DB_USER}:${OPENFGA_DB_PASSWORD}@bm4a-postgres:5432/${OPENFGA_DB}?sslmode=disable
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - bm4a-network
+
+  openfga:
+    image: openfga/openfga:latest
+    container_name: bm4a-openfga
+    restart: unless-stopped
+
+    command: run
+
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgres://${OPENFGA_DB_USER}:${OPENFGA_DB_PASSWORD}@bm4a-postgres:5432/${OPENFGA_DB}?sslmode=disable
+
+    ports:
+      - "2347:8080"
+      - "2348:8081"
+
+    depends_on:
+      openfga-migrate:
+        condition: service_completed_successfully
+
+    networks:
+      - bm4a-network
+
+networks:
+  bm4a-network:
+    external: true

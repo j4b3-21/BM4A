@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis:8
+    container_name: bm4a-redis
+
+    restart: unless-stopped
+
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+
+    ports:
+      - "2349:6379"
+
+    volumes:
+      - redis-data:/data
+
+    networks:
+      - bm4a-network
+
+volumes:
+  redis-data:
+
+networks:
+  bm4a-network:
+    external: true

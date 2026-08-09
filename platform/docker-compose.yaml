@@ -1,0 +1,38 @@
+services:
+
+  platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: bm4a-platform
+
+    restart: unless-stopped
+
+    env_file:
+      - ../.env
+
+    environment:
+      PLATFORM_DB: ${PLATFORM_DB}
+      PLATFORM_DB_USER: ${PLATFORM_DB_USER}
+      PLATFORM_DB_PASSWORD: ${PLATFORM_DB_PASSWORD}
+
+      KEYCLOAK_HOST: bm4a-keycloak
+      KEYCLOAK_PORT: 8080
+      KEYCLOAK_REALM: bm4a
+
+      OPENFGA_HOST: bm4a-openfga
+      OPENFGA_PORT: 8080
+
+      REDIS_HOST: bm4a-redis
+      REDIS_PORT: 6379
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - bm4a-network
+
+networks:
+  bm4a-network:
+    external: true

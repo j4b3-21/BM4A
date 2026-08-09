@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: bm4a-postgres
+    restart: unless-stopped
+
+    env_file:
+      - ../.env
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    ports:
+      - "2345:5432"
+
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      - ./init:/docker-entrypoint-initdb.d:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+    networks:
+      - bm4a-network
+
+volumes:
+  postgres-data:
+
+networks:
+  bm4a-network:
+    external: true
