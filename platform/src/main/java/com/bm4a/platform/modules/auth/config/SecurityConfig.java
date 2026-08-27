@@ -29,7 +29,8 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/",
-                                "/health"
+                                "/health",
+                                "/api"
                         ).permitAll()
 
                         .anyRequest().authenticated()
