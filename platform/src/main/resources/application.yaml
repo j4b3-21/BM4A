@@ -27,8 +27,11 @@ spring:
         jwt:
           issuer-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
-
-
+    jwt:
+      auth:
+        converter:
+          resource-id: public
+          principal-attribute: preffered_username
       client:
         registration:
           keycloak:
@@ -48,6 +51,12 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
+
+jwt:
+  auth:
+    converter:
+      resource-id: public
+      principal-attribute: preffered_username
 
 server:
   port: 8080
