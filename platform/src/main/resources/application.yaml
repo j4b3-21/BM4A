@@ -23,10 +23,11 @@ spring:
 
   security:
     oauth2:
-
       resourceserver:
         jwt:
           issuer-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
 
       client:
         registration:
