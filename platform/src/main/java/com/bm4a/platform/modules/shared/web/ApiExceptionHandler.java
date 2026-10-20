@@ -33,7 +33,7 @@ import tools.jackson.databind.exc.UnrecognizedPropertyException;
  * are logged with the correlation ID but never returned to the client.
  */
 @RestControllerAdvice
-public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
