@@ -17,42 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static com.bm4a.platform.support.Fixtures.EXAMPLE_ASSET;
+
 import com.bm4a.platform.support.IntegrationTest;
 import com.bm4a.platform.support.TestApi;
 import com.bm4a.platform.support.TestApi.Caller;
 
 @IntegrationTest
 class MetadataIntegrationTest {
-
-    static final String EXAMPLE_ASSET = """
-            {
-              "apiKey": "example_asset",
-              "labelSingular": "Example Asset",
-              "labelPlural": "Example Assets",
-              "fields": [
-                {"apiKey": "name", "label": "Name", "type": "TEXT", "required": true, "searchable": true, "sortable": true, "filterable": true},
-                {"apiKey": "serial", "label": "Serial", "type": "TEXT", "unique": true, "filterable": true},
-                {"apiKey": "notes", "label": "Notes", "type": "LONG_TEXT"},
-                {"apiKey": "quantity", "label": "Quantity", "type": "INTEGER", "defaultValue": 1, "config": {"min": 0}, "sortable": true, "filterable": true},
-                {"apiKey": "weight", "label": "Weight", "type": "DECIMAL", "config": {"scale": 3}},
-                {"apiKey": "active", "label": "Active", "type": "BOOLEAN", "defaultValue": true, "filterable": true},
-                {"apiKey": "purchased_on", "label": "Purchased on", "type": "DATE", "sortable": true, "filterable": true},
-                {"apiKey": "checked_at", "label": "Checked at", "type": "DATETIME"},
-                {"apiKey": "owner_email", "label": "Owner e-mail", "type": "EMAIL"},
-                {"apiKey": "owner_phone", "label": "Owner phone", "type": "PHONE"},
-                {"apiKey": "manual_url", "label": "Manual", "type": "URL"},
-                {"apiKey": "price", "label": "Price", "type": "CURRENCY", "config": {"currencies": ["INR", "USD"]}, "sortable": true, "filterable": true},
-                {"apiKey": "condition", "label": "Condition", "type": "SINGLE_SELECT", "filterable": true,
-                 "config": {"options": [{"value": "new", "label": "New"}, {"value": "used", "label": "Used"}]}},
-                {"apiKey": "tags", "label": "Tags", "type": "MULTI_SELECT", "filterable": true,
-                 "config": {"options": [{"value": "it", "label": "IT"}, {"value": "office", "label": "Office"}], "maxSelections": 2}},
-                {"apiKey": "specs", "label": "Specs", "type": "JSON"},
-                {"apiKey": "invoice", "label": "Invoice", "type": "FILE_REFERENCE"},
-                {"apiKey": "photo", "label": "Photo", "type": "IMAGE_REFERENCE"},
-                {"apiKey": "parent", "label": "Parent asset", "type": "LOOKUP", "filterable": true, "config": {"targetModuleKey": "example_asset"}}
-              ]
-            }
-            """;
 
     @Autowired
     MockMvc mvc;
