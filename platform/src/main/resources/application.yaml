@@ -43,6 +43,14 @@ bm4a:
       jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:${bm4a.security.jwt.issuer-uri}/protocol/openid-connect/certs}
       audience: ${KEYCLOAK_AUDIENCE:bm4a-api}
       platform-admin-role: bm4a-platform-admin
+  authz:
+    openfga:
+      api-url: ${OPENFGA_API_URL:http://localhost:2347}
+      api-token: ${OPENFGA_PRESHARED_KEY:}
+      store-name: ${OPENFGA_STORE_NAME:bm4a}
+      store-id: ${OPENFGA_STORE_ID:}
+      model-id: ${OPENFGA_MODEL_ID:}
+      bootstrap: false
 
 server:
   port: 8080
