@@ -28,13 +28,6 @@ spring:
     problemdetails:
       enabled: true
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${bm4a.security.jwt.issuer-uri}
-          jwk-set-uri: ${bm4a.security.jwt.jwk-set-uri}
-
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -49,12 +42,7 @@ bm4a:
       issuer-uri: ${KEYCLOAK_ISSUER_URI:http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:2346}/realms/${KEYCLOAK_REALM:bm4a}}
       jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:${bm4a.security.jwt.issuer-uri}/protocol/openid-connect/certs}
       audience: ${KEYCLOAK_AUDIENCE:bm4a-api}
-
-jwt:
-  auth:
-    converter:
-      resource-id: bm4a-api
-      principal-attribute: sub
+      platform-admin-role: bm4a-platform-admin
 
 server:
   port: 8080
