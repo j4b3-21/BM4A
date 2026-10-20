@@ -51,12 +51,22 @@ bm4a:
       store-id: ${OPENFGA_STORE_ID:}
       model-id: ${OPENFGA_MODEL_ID:}
       bootstrap: false
+  ratelimit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    writes-per-minute: ${RATE_LIMIT_WRITES_PER_MINUTE:300}
+
+logging:
+  pattern:
+    correlation: "[%X{correlationId:-}] "
 
 server:
   port: 8080
   shutdown: graceful
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   endpoints:
     web:
       exposure:

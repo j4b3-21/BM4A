@@ -6,6 +6,8 @@ bm4a:
       issuer-uri: https://issuer.test/realms/bm4a
       jwk-set-uri: https://issuer.test/realms/bm4a/protocol/openid-connect/certs
       audience: bm4a-api
+  ratelimit:
+    enabled: false
 
 logging:
   level:
