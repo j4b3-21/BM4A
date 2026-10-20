@@ -1,8 +1,36 @@
 # BM4A (Base Model For All)
 ## Development Roadmap & Implementation Phases
 
-**Version:** 1.0
+**Version:** 1.1
 **Author:** Bhuvan M Acharya
+
+---
+
+# Implementation Status (updated 2026-10-20, branch `feature/platform-foundation`)
+
+Legend: **Done** = implemented, tested and documented; **Partial** = foundation in place, scope noted;
+**Deferred** = designed or planned, not implemented.
+
+| Phase / capability | Status | Notes |
+|--------------------|--------|-------|
+| 0 - Organizations (create, settings, lifecycle, isolation) | Done | Archive by owner; suspend/reactivate by platform admin |
+| 0 - Subscription management | Deferred | Needs billing model |
+| 0 - Users: profiles, preferences | Done | `(issuer, subject)` identity, JIT provisioning |
+| 0 - Users: invitations, teams | Deferred | Members are added by user ID today; teams will be OpenFGA usersets |
+| 0 - Authentication (OAuth2/OIDC, SSO, MFA, Google) | Done / Keycloak-configured | API validates issuer, audience, expiry, signature. MFA/Google/SSO are Keycloak realm settings |
+| 0 - Authorization: organization permissions (OpenFGA) | Done | Owner/admin/member model, fail-closed, outbox tuple sync |
+| 0 - Audit: data changes, security events | Done | Append-only (DB triggers), redaction; login tracking stays in Keycloak events |
+| 1 - Module builder | Done | Tenant and platform-global modules, versions, archive/restore |
+| 1 - Field builder | Done | 17 types incl. currency, select, JSON, file/image references, lookup |
+| 1 - Formula fields | Deferred | No tenant expressions are evaluated; safe sandboxed language planned (ADR-001) |
+| 1 - Layout builder (sections, tabs) | Done (metadata) | Conditional visibility and drag & drop UI deferred |
+| 2 - Record engine (CRUD, soft delete, restore, versioning) | Done | JSONB, If-Match concurrency, history and revert, filters/sort/search |
+| 3 - Relationships (1:1, 1:N, N:M, lookups) | Done | Cardinality via unique indexes; restrict/detach delete behavior |
+| 4 - Permission engine: org permissions | Done | |
+| 4 - Module / record permissions, row-level security | Deferred | Next authorization milestone (ADR-002 lists the plan) |
+| 5-8 - Workflow, automation, forms, reporting | Deferred | Extension point: `RecordEvent` published on every record change |
+| Admin UI | Deferred | API-first milestone: OpenAPI/Swagger UI, request collection |
+| Platform operations | Done | Docker (non-root), compose with health checks, CI, health probes, metrics, rate limiting |
 
 ---
 
