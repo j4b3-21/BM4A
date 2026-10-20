@@ -312,6 +312,22 @@ class RecordIntegrationTest {
     }
 
     @Test
+    void oversizedRecordsAreRejected() throws Exception {
+        for (String key : new String[] { "essay1", "essay2", "essay3" }) {
+            owner.post("/api/v1/orgs/{org}/modules/example_asset/fields", "{\"apiKey\":\"" + key
+                    + "\",\"label\":\"" + key + "\",\"type\":\"LONG_TEXT\",\"config\":{\"maxLength\":100000}}", org)
+                    .andExpect(status().isCreated());
+        }
+        String essay = "e".repeat(99_000);
+        owner.post(RECORDS, "{\"data\":{\"name\":\"Fits\",\"essay1\":\"" + essay + "\",\"essay2\":\"" + essay
+                + "\"}}", org).andExpect(status().isCreated());
+        owner.post(RECORDS, "{\"data\":{\"name\":\"Too big\",\"essay1\":\"" + essay + "\",\"essay2\":\"" + essay
+                + "\",\"essay3\":\"" + essay + "\"}}", org)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors[0].code").value("payload_too_large"));
+    }
+
+    @Test
     void archivedModulesAreReadOnly() throws Exception {
         String id = createRecord(owner, org, "example_asset", "{\"name\":\"Old\"}");
         owner.delete("/api/v1/orgs/{org}/modules/example_asset", "\"1\"", org).andExpect(status().isOk());
