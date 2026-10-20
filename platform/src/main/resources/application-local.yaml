@@ -7,6 +7,11 @@ spring:
   datasource:
     url: jdbc:postgresql://${PLATFORM_DB_HOST:localhost}:${PLATFORM_DB_PORT:2345}/${PLATFORM_DB:platform}
 
+bm4a:
+  authz:
+    openfga:
+      bootstrap: true
+
 management:
   endpoint:
     health:
