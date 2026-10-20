@@ -40,6 +40,9 @@ spring:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
 
+  modulith:
+    detection-strategy: explicitly-annotated
+
 bm4a:
   security:
     jwt:
