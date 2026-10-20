@@ -78,6 +78,8 @@ scripts/           dev-token.sh, seed-demo.sh, smoke-test.sh
 
 ## Quick start (clean checkout)
 
+Step-by-step guide (minimal and extensive setup, daily usage, production notes): **[SETUP.md](SETUP.md)**.
+
 ```bash
 # 1. Configuration (development placeholders; change the "change-me" values if you like)
 cp infrastructure/.env.example infrastructure/.env
