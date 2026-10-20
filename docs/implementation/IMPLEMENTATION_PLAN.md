@@ -14,8 +14,8 @@ by `ModularityTests` (Spring Modulith).
 | `identity` | JWT validation (issuer, audience, signature, expiry), security filter chain, claim extraction | shared |
 | `users` | Internal user identity `(issuer, subject) -> user id`, profile, preferences, `CurrentUser` | shared, identity |
 | `authorization` | `AuthorizationService` port, OpenFGA adapter, model bootstrap, tuple synchronization | shared |
-| `audit` | Append-only audit events, redaction, audit query API | shared |
-| `tenancy` | Organizations, settings, memberships, `TenantContext` resolution | shared, users, authorization, audit |
+| `tenancy` | Organizations, settings, memberships, `TenantContext` resolution; publishes `TenancyEvent`s | shared, users, authorization |
+| `audit` | Append-only audit events, redaction, audit query API; records tenancy events in the same transaction | shared, users, authorization, tenancy |
 | `metadata` | Module, field and layout definitions, validation, versioning | shared, users, tenancy, authorization, audit |
 | `records` | Generic JSONB record engine | shared, users, tenancy, authorization, audit, metadata |
 | `relationships` | Relationship definitions and record links | shared, users, tenancy, authorization, audit, metadata, records |
