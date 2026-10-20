@@ -31,6 +31,15 @@ class PlatformApplicationTests {
     }
 
     @Test
+    void openApiDescriptionIsPublishedWithoutAuthentication() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.info.title").value("BM4A Platform API"))
+                .andExpect(jsonPath("$.paths['/api/v1/orgs/{orgId}/modules/{moduleKey}/records']").exists())
+                .andExpect(jsonPath("$.components.securitySchemes.bearer.scheme").value("bearer"));
+    }
+
+    @Test
     void apiRequiresAuthentication() throws Exception {
         mvc.perform(get("/api/v1/me")).andExpect(status().isUnauthorized());
     }
