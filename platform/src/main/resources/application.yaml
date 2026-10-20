@@ -57,7 +57,7 @@ bm4a:
 
 logging:
   pattern:
-    correlation: "[%X{correlationId:-}] "
+    correlation: "%replace([%X{correlationId}] ){'^\\[\\] $', ''}"
 
 server:
   port: 8080
