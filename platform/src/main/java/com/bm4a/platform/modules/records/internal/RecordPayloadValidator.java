@@ -1,5 +1,6 @@
 package com.bm4a.platform.modules.records.internal;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -33,6 +34,9 @@ import tools.jackson.databind.node.ObjectNode;
  */
 @Component
 class RecordPayloadValidator {
+
+    /** Upper bound for a record's complete canonical {@code data} document. */
+    static final int MAX_DATA_BYTES = 256 * 1024;
 
     enum Mode {
         CREATE, REPLACE, MERGE
@@ -107,6 +111,10 @@ class RecordPayloadValidator {
         }
         if (!violations.isEmpty()) {
             throw ApiException.validation(violations);
+        }
+        if (next.toString().getBytes(StandardCharsets.UTF_8).length > MAX_DATA_BYTES) {
+            throw ApiException.validation("data", "payload_too_large",
+                    "record data must not exceed " + MAX_DATA_BYTES / 1024 + " KiB");
         }
         return new Result(next, changedFields(existing, next));
     }
