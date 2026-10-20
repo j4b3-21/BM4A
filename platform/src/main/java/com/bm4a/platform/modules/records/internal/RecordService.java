@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -56,14 +57,14 @@ public class RecordService implements RecordReader {
     private final RecordRepository repository;
     private final ModuleSchemas schemas;
     private final RecordPayloadValidator validator;
-    private final List<RecordDeletionGuard> deletionGuards;
+    private final ObjectProvider<RecordDeletionGuard> deletionGuards;
     private final AuditLog audit;
     private final ApplicationEventPublisher events;
     private final JsonColumns json;
     private final Clock clock;
 
     RecordService(RecordRepository repository, ModuleSchemas schemas, RecordPayloadValidator validator,
-            List<RecordDeletionGuard> deletionGuards, AuditLog audit, ApplicationEventPublisher events,
+            ObjectProvider<RecordDeletionGuard> deletionGuards, AuditLog audit, ApplicationEventPublisher events,
             JsonColumns json, Clock clock) {
         this.repository = repository;
         this.schemas = schemas;
@@ -128,7 +129,7 @@ public class RecordService implements RecordReader {
         ModuleSchema module = writableModule(tenant, moduleKey);
         RecordView current = lockActive(tenant, module, id, expectedVersion);
         rejectInboundRestrictingLookups(tenant, module, current);
-        deletionGuards.forEach(guard -> guard.beforeDelete(tenant, module, current));
+        deletionGuards.orderedStream().forEach(guard -> guard.beforeDelete(tenant, module, current));
         repository.releaseAllUnique(tenant.organizationId(), id);
         Instant now = SqlValues.now(clock);
         RecordView deleted = new RecordView(id, current.organizationId(), current.moduleId(), current.data(),
