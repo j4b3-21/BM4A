@@ -19,7 +19,7 @@ by `ModularityTests` (Spring Modulith).
 | `metadata` | Module, field and layout definitions, validation, versioning | shared, users, tenancy, authorization, audit |
 | `records` | Generic JSONB record engine | shared, users, tenancy, authorization, audit, metadata |
 | `relationships` | Relationship definitions and record links | shared, users, tenancy, authorization, audit, metadata, records |
-| `ratelimit` | Redis-backed rate limiting of mutating API calls | shared, identity |
+| `ratelimit` | Redis-backed rate limiting of mutating API calls | shared |
 
 The `users` bounded context is separated from `identity`: `identity` only knows tokens, `users` owns the
 application's user rows. Keycloak remains the only credential store.
